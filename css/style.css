@@ -10,4 +10,6 @@
 @import url(components/main-header.css);
 @import url(components/tag-menu.css);
 @import url(components/main-content.css);
+@import url(components/meme-gallery.css);
+@import url(components/meme-editor.css);
 @import url(components/footer.css);

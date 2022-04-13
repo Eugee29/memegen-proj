@@ -1,0 +1,10 @@
+.meme-gallery {
+  display: grid;
+  height: 100%;
+  grid-template-columns: repeat(auto-fill, 150px);
+  gap: 1em;
+}
+
+.meme-gallery > * {
+  height: 150px;
+}

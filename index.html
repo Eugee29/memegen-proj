@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Memegen</title>
   </head>
-  <body>
+  <body onload="onInit()">
     <div class="page-container">
+      <!-- HEADER -->
       <header class="main-header main-layout">
         <div class="logo">Memegen</div>
         <nav class="main-nav">
@@ -19,19 +20,18 @@
           </ul>
         </nav>
       </header>
-      <section class="tag-menu main-layout">
-        <input type="text" placeholder="Search" />
-        <ul>
-          <li><button>Tag 1</button></li>
-          <li><button>Tag 2</button></li>
-          <li><button>Tag 3</button></li>
-          <li><button>Tag 4</button></li>
-        </ul>
-      </section>
-      <main class="main-content main-layout">
-        <div class="meme-gallery">main</div>
-      </main>
+
+      <!-- MAIN -->
+      <main class="main-content main-layout"></main>
+
+      <!-- FOOTER -->
       <footer class="footer main-layout">footer</footer>
     </div>
+
+    <script src="js/services/meme.service.js"></script>
+    <script src="js/controllers/gallery.controller.js"></script>
+    <script src="js/controllers/editor.controller.js"></script>
+
+    <script src="js/main.js"></script>
   </body>
 </html>
