@@ -23,17 +23,30 @@ const gImgs = [
 
 const gKeywordSearchCountMap = _createKeywordSearchMap()
 
-var gMeme = {
-  selectedImgId: 5,
+const gMeme = {
+  selectedImgId: 1,
   selectedLineIdx: 0,
   lines: [
     {
-      txt: 'I sometimes eat Falafel',
-      size: 20,
-      align: 'left',
-      color: 'red',
+      txt: 'Text line',
+      font: 'arial',
+      size: 50,
+      align: 'center',
+      color: 'black',
     },
   ],
+}
+
+function getMeme() {
+  return gMeme
+}
+
+function setLineTxt(txt) {
+  gMeme.lines[gMeme.selectedLineIdx].txt = txt
+}
+
+function setMemeId(imgId) {
+  gMeme.selectedImgId = imgId
 }
 
 function getImgs() {
