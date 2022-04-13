@@ -2,7 +2,7 @@
 
 function renderGallery() {
   let strHTML = `
-    <section class="tag-menu main-layout">
+    <section class="tag-menu">
     <input type="text" placeholder="Search" />
     <ul>
       <li><button>Tag 1</button></li>

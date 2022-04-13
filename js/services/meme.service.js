@@ -23,7 +23,30 @@ const gImgs = [
 
 const gKeywordSearchCountMap = _createKeywordSearchMap()
 
-let gMeme = createMeme()
+let gMeme = {
+  selectedImgId: 1,
+  selectedLineIdx: 0,
+  lines: [
+    // {
+    //   txt: '',
+    //   font: 'arial',
+    //   size: 50,
+    //   align: 'center',
+    //   color: 'white',
+    //   stroke: 'black',
+    //   pos: {},
+    // },
+    // {
+    //   txt: 'second text',
+    //   font: 'arial',
+    //   size: 50,
+    //   align: 'center',
+    //   color: 'white',
+    //   stroke: 'black',
+    //   pos: {},
+    // },
+  ],
+}
 
 function getImgs() {
   return gImgs
@@ -54,30 +77,30 @@ function switchLine() {
   if (gMeme.selectedLineIdx >= gMeme.lines.length) gMeme.selectedLineIdx = 0
 }
 
-function createMeme() {
-  return {
+function setLinePos(x, y) {
+  gMeme.lines[gMeme.selectedLineIdx].pos[x] = x
+  gMeme.lines[gMeme.selectedLineIdx].pos[y] = y
+}
+
+function createLine(pos) {
+  const line = {
+    txt: 'Your Text',
+    font: 'arial',
+    size: 50,
+    align: 'center',
+    color: 'white',
+    stroke: 'black',
+    pos,
+  }
+  gMeme.lines.push(line)
+  gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
+function resetMeme() {
+  gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
-    lines: [
-      {
-        txt: '',
-        font: 'arial',
-        size: 50,
-        align: 'center',
-        color: 'white',
-        stroke: 'black',
-        pos: {},
-      },
-      {
-        txt: 'second text',
-        font: 'arial',
-        size: 50,
-        align: 'center',
-        color: 'white',
-        stroke: 'black',
-        pos: {},
-      },
-    ],
+    lines: [],
   }
 }
 

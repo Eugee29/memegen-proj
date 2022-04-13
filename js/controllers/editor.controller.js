@@ -11,10 +11,10 @@ function renderEditor(ev) {
             <canvas id="canvas" width="600" height="600"></canvas>
           </section>
           <section class="editor-tools">
-            <input type="text" placeholder="Text line" oninput="onSetLineTxt(this.value)" />
+            <input type="text" placeholder="Your Text" oninput="onSetLineTxt(this.value)" />
             <div class="text-tools">
               <button>🠗</button><button>🠕</button><button onclick="onSwitchLine()">⇃↾</button
-              ><button>+</button><button>|||</button>
+              ><button onclick ="onCreateLine()">+</button><button>|||</button>
             </div>
             <div class="text-editor">
               <button class="item-1" onclick="onChangeFontSize(3)">A+</button>
@@ -40,19 +40,13 @@ function renderEditor(ev) {
     .querySelector('.main-content .back-btn')
     .addEventListener('click', renderGallery)
 
-  // document
-  //   .querySelector('.editor-tools input[type=text]')
-  //   .addEventListener('input', onSetLineTxt.bind(this))
-
   gElCanvas = document.querySelector('#canvas')
   gCtx = gElCanvas.getContext('2d')
 
+  resetMeme()
   setMemeId(ev.target.dataset.id)
-  createMeme()
-  onSetLineTxt(
-    document.querySelector('.editor-tools input[type=text]').placeholder
-  )
-  renderMeme()
+  onCreateLine()
+  // renderMeme()
 }
 
 function renderMeme() {
@@ -62,19 +56,43 @@ function renderMeme() {
   genMeme.src = img.url
   genMeme.onload = () => {
     gCtx.drawImage(genMeme, 0, 0, gElCanvas.width, gElCanvas.height)
-    currMeme.lines.forEach((line) => drawText(line, gElCanvas.width / 2, 50))
+    currMeme.lines.forEach((line) => renderText(line))
   }
 }
 
-function drawText(line, x, y) {
-  // gCtx.lineWidth = 2
-  // gCtx.strokeStyle = 'red'
-  // gCtx.strokeText(txt, x, y)
+function renderText(line) {
+  const { x, y } = line.pos
   gCtx.font = line.size + 'px ' + line.font
-  gCtx.textBaseline = 'middle'
+  gCtx.textBaseline = 'top'
   gCtx.textAlign = line.align
   gCtx.fillStyle = line.color
   gCtx.fillText(line.txt, x, y)
+  gCtx.lineWidth = 2
+  gCtx.strokeStyle = line.stroke
+  gCtx.strokeText(line.txt, x, y)
+}
+
+// function drawRect(x, y) {
+//   gCtx.rect(x, y, 200, 200)
+//   gCtx.fillStyle = 'green'
+//   gCtx.fillRect(x, y, 200, 200)
+//   gCtx.strokeStyle = 'red'
+//   gCtx.stroke()
+// }
+
+function onCreateLine() {
+  switch (getMeme().lines.length) {
+    case 0:
+      createLine({ x: gElCanvas.width / 2, y: 50 })
+      break
+    case 1:
+      createLine({ x: gElCanvas.width / 2, y: gElCanvas.height - 50 })
+      break
+    default:
+      createLine({ x: gElCanvas.width / 2, y: gElCanvas.height / 2 })
+  }
+  document.querySelector('.editor-tools input[type=text]').value = ''
+  renderMeme()
 }
 
 function onSetLineTxt(txt) {
