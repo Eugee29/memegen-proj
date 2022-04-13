@@ -26,26 +26,7 @@ const gKeywordSearchCountMap = _createKeywordSearchMap()
 let gMeme = {
   selectedImgId: 1,
   selectedLineIdx: 0,
-  lines: [
-    // {
-    //   txt: '',
-    //   font: 'arial',
-    //   size: 50,
-    //   align: 'center',
-    //   color: 'white',
-    //   stroke: 'black',
-    //   pos: {},
-    // },
-    // {
-    //   txt: 'second text',
-    //   font: 'arial',
-    //   size: 50,
-    //   align: 'center',
-    //   color: 'white',
-    //   stroke: 'black',
-    //   pos: {},
-    // },
-  ],
+  lines: [],
 }
 
 function getImgs() {
