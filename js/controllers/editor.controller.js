@@ -63,7 +63,7 @@ function renderMeme() {
 function renderText(line) {
   const { x, y } = line.pos
   gCtx.font = line.size + 'px ' + line.font
-  gCtx.textBaseline = 'top'
+  gCtx.textBaseline = 'center'
   gCtx.textAlign = line.align
   gCtx.fillStyle = line.color
   gCtx.fillText(line.txt, x, y)
