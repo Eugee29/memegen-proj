@@ -13,19 +13,19 @@ function renderEditor(ev) {
           <section class="editor-tools">
             <input type="text" placeholder="Text line" oninput="onSetLineTxt(this.value)" />
             <div class="text-tools">
-              <button>🠗</button><button>🠕</button><button>⇃↾</button
+              <button>🠗</button><button>🠕</button><button onclick="onSwitchLine()">⇃↾</button
               ><button>+</button><button>|||</button>
             </div>
             <div class="text-editor">
-              <button class="item-1">A+</button>
-              <button class="item-2">A-</button>
+              <button class="item-1" onclick="onChangeFontSize(3)">A+</button>
+              <button class="item-2" onclick="onChangeFontSize(-3)">A-</button>
               <button class="item-3">=</button>
               <button class="item-4">=</button>
               <button class="item-5">=</button>
               <select class="item-6" name="font">
                 <option value="impact">IMPACT</option></select
               ><button class="item-7">S</button>
-              <input class="item-8" type="color" />
+              <input class="item-8" type="color" oninput="onSetLineColor(this.value)" />
             </div>
             <div class="sticker-selector">
               <button>😀</button><button>😀</button><button>😀</button>
@@ -48,6 +48,7 @@ function renderEditor(ev) {
   gCtx = gElCanvas.getContext('2d')
 
   setMemeId(ev.target.dataset.id)
+  createMeme()
   onSetLineTxt(
     document.querySelector('.editor-tools input[type=text]').placeholder
   )
@@ -61,24 +62,36 @@ function renderMeme() {
   genMeme.src = img.url
   genMeme.onload = () => {
     gCtx.drawImage(genMeme, 0, 0, gElCanvas.width, gElCanvas.height)
-    drawText(currMeme.lines[currMeme.selectedLineIdx], 300, 50)
+    currMeme.lines.forEach((line) => drawText(line, gElCanvas.width / 2, 50))
   }
 }
 
 function drawText(line, x, y) {
-  gCtx.font = line.size + 'px ' + line.font
-  // gCtx.fillText(txt, x, y)
-  gCtx.textBaseline = 'middle'
-  gCtx.textAlign = line.align
   // gCtx.lineWidth = 2
-  gCtx.fillStyle = line.color
-  // gCtx.font = '50px david'
-  gCtx.fillText(line.txt, x, y)
   // gCtx.strokeStyle = 'red'
   // gCtx.strokeText(txt, x, y)
+  gCtx.font = line.size + 'px ' + line.font
+  gCtx.textBaseline = 'middle'
+  gCtx.textAlign = line.align
+  gCtx.fillStyle = line.color
+  gCtx.fillText(line.txt, x, y)
 }
 
 function onSetLineTxt(txt) {
   setLineTxt(txt)
   renderMeme()
+}
+
+function onSetLineColor(color) {
+  setLineColor(color)
+  renderMeme()
+}
+
+function onChangeFontSize(val) {
+  changeFontSize(val)
+  renderMeme()
+}
+
+function onSwitchLine() {
+  switchLine()
 }

@@ -23,34 +23,62 @@ const gImgs = [
 
 const gKeywordSearchCountMap = _createKeywordSearchMap()
 
-const gMeme = {
-  selectedImgId: 1,
-  selectedLineIdx: 0,
-  lines: [
-    {
-      txt: 'Text line',
-      font: 'arial',
-      size: 50,
-      align: 'center',
-      color: 'black',
-    },
-  ],
+let gMeme = createMeme()
+
+function getImgs() {
+  return gImgs
 }
 
 function getMeme() {
   return gMeme
 }
 
-function setLineTxt(txt) {
-  gMeme.lines[gMeme.selectedLineIdx].txt = txt
-}
-
 function setMemeId(imgId) {
   gMeme.selectedImgId = imgId
 }
 
-function getImgs() {
-  return gImgs
+function setLineTxt(txt) {
+  gMeme.lines[gMeme.selectedLineIdx].txt = txt
+}
+
+function setLineColor(color) {
+  gMeme.lines[gMeme.selectedLineIdx].color = color
+}
+
+function changeFontSize(val) {
+  gMeme.lines[gMeme.selectedLineIdx].size += val
+}
+
+function switchLine() {
+  gMeme.selectedLineIdx += 1
+  if (gMeme.selectedLineIdx >= gMeme.lines.length) gMeme.selectedLineIdx = 0
+}
+
+function createMeme() {
+  return {
+    selectedImgId: 1,
+    selectedLineIdx: 0,
+    lines: [
+      {
+        txt: '',
+        font: 'arial',
+        size: 50,
+        align: 'center',
+        color: 'white',
+        stroke: 'black',
+        pos: {},
+      },
+      {
+        txt: 'second text',
+        font: 'arial',
+        size: 50,
+        align: 'center',
+        color: 'white',
+        stroke: 'black',
+        pos: {},
+      },
+    ],
+  }
 }
 
 function _createKeywordSearchMap() {
