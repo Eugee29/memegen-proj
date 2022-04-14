@@ -23,11 +23,14 @@ const gImgs = [
 
 const gKeywordSearchCountMap = _createKeywordSearchMap()
 
-let gMeme = {
-  selectedImgId: 1,
-  selectedLineIdx: 0,
-  lines: [],
-}
+let gMeme
+// =
+// {
+//   selectedImgId: 1,
+//   selectedLineIdx: 0,
+//   linesCreated: 0,
+//   lines: [],
+// }
 
 function getImgs() {
   return gImgs
@@ -45,12 +48,24 @@ function setLineTxt(txt) {
   gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
 
-function setLineColor(color) {
+function setFillColor(color) {
   gMeme.lines[gMeme.selectedLineIdx].color = color
+}
+
+function setStrokeColor(color) {
+  gMeme.lines[gMeme.selectedLineIdx].stroke = color
 }
 
 function changeFontSize(val) {
   gMeme.lines[gMeme.selectedLineIdx].size += val
+}
+
+function changeLinePos(val) {
+  gMeme.lines[gMeme.selectedLineIdx].pos.y += val
+}
+
+function changeFont(font) {
+  gMeme.lines[gMeme.selectedLineIdx].font = font
 }
 
 function switchLine() {
@@ -63,10 +78,17 @@ function setLinePos(x, y) {
   gMeme.lines[gMeme.selectedLineIdx].pos[y] = y
 }
 
+function deleteLine() {
+  console.log('hi')
+  gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+  if (gMeme.lines.length) gMeme.selectedLineIdx--
+}
+
 function createLine(pos) {
+  gMeme.lines.forEach((line) => (line.isSelected = false))
   const line = {
     txt: 'Your Text',
-    font: 'arial',
+    font: 'impact',
     size: 50,
     align: 'center',
     color: 'white',
@@ -74,13 +96,19 @@ function createLine(pos) {
     pos,
   }
   gMeme.lines.push(line)
+  gMeme.linesCreated++
   gMeme.selectedLineIdx = gMeme.lines.length - 1
 }
 
-function resetMeme() {
+function changeTextAlign(side) {
+  gMeme.lines[gMeme.selectedLineIdx].align = side
+}
+
+function createMeme() {
   gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
+    linesCreated: 0,
     lines: [],
   }
 }

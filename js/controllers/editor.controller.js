@@ -13,19 +13,23 @@ function renderEditor(ev) {
           <section class="editor-tools">
             <input type="text" placeholder="Your Text" oninput="onSetLineTxt(this.value)" />
             <div class="text-tools">
-              <button>🠗</button><button>🠕</button><button onclick="onSwitchLine()">⇃↾</button
-              ><button onclick ="onCreateLine()">+</button><button>|||</button>
+              <button onclick="onChangeLinePos(5)">🠗</button>
+              <button onclick="onChangeLinePos(-5)">🠕</button>
+              <button onclick="onSwitchLine()">⇃↾</button>
+              <button onclick ="onCreateLine()">+</button>
+              <button onclick ="onDeleteLine()">DEL</button>
             </div>
             <div class="text-editor">
               <button class="item-1" onclick="onChangeFontSize(3)">A+</button>
               <button class="item-2" onclick="onChangeFontSize(-3)">A-</button>
-              <button class="item-3">=</button>
-              <button class="item-4">=</button>
-              <button class="item-5">=</button>
-              <select class="item-6" name="font">
-                <option value="impact">IMPACT</option></select
-              ><button class="item-7">S</button>
-              <input class="item-8" type="color" oninput="onSetLineColor(this.value)" />
+              <button class="item-3" onclick ="onChangeTextAlign('right')">left</button>
+              <button class="item-4" onclick ="onChangeTextAlign('center')">center</button>
+              <button class="item-5" onclick ="onChangeTextAlign('left')">right</button>
+              <select class="item-6" name="font" onchange="onChangeFont(this)">
+                <option value="impact">IMPACT</option>
+                <option value="arial">arial</option></select>
+              <input class="item-7" type="color" oninput="onSetStrokeColor(this.value)" />
+              <input class="item-8" type="color" oninput="onSetFillColor(this.value)" />
             </div>
             <div class="sticker-selector">
               <button>😀</button><button>😀</button><button>😀</button>
@@ -35,18 +39,16 @@ function renderEditor(ev) {
             </div>
           </section>
         </div>`
+  gElCanvas = document.querySelector('#canvas')
+  gCtx = gElCanvas.getContext('2d')
 
   document
     .querySelector('.main-content .back-btn')
     .addEventListener('click', renderGallery)
 
-  gElCanvas = document.querySelector('#canvas')
-  gCtx = gElCanvas.getContext('2d')
-
-  resetMeme()
+  createMeme()
   setMemeId(ev.target.dataset.id)
   onCreateLine()
-  // renderMeme()
 }
 
 function renderMeme() {
@@ -57,11 +59,13 @@ function renderMeme() {
   genMeme.onload = () => {
     gCtx.drawImage(genMeme, 0, 0, gElCanvas.width, gElCanvas.height)
     currMeme.lines.forEach((line) => renderText(line))
+    markLine()
   }
 }
 
 function renderText(line) {
-  const { x, y } = line.pos
+  let { x, y } = line.pos
+
   gCtx.font = line.size + 'px ' + line.font
   gCtx.textBaseline = 'middle'
   gCtx.textAlign = line.align
@@ -72,16 +76,30 @@ function renderText(line) {
   gCtx.strokeText(line.txt, x, y)
 }
 
-// function drawRect(x, y) {
-//   gCtx.rect(x, y, 200, 200)
-//   gCtx.fillStyle = 'green'
-//   gCtx.fillRect(x, y, 200, 200)
-//   gCtx.strokeStyle = 'red'
-//   gCtx.stroke()
-// }
+function markLine() {
+  const line = gMeme.lines[gMeme.selectedLineIdx]
+  if (!line) return
+  const textWidth = gCtx.measureText(line.txt).width
+  console.log(line.txt)
+  console.log(textWidth)
+  drawRect(
+    line.pos.x - textWidth / 2 - 10,
+    line.pos.y - line.size / 2 - 10,
+    textWidth + 20,
+    line.size + 20
+  )
+}
+
+function drawRect(startX, startY, endX, endY) {
+  gCtx.beginPath()
+  gCtx.rect(startX, startY, endX, endY)
+  gCtx.strokeStyle = 'black'
+  gCtx.stroke()
+  gCtx.closePath()
+}
 
 function onCreateLine() {
-  switch (getMeme().lines.length) {
+  switch (getMeme().linesCreated) {
     case 0:
       createLine({ x: gElCanvas.width / 2, y: 50 })
       break
@@ -95,13 +113,28 @@ function onCreateLine() {
   renderMeme()
 }
 
+function onChangeFont(elSelect) {
+  changeFont(elSelect.options[elSelect.selectedIndex].value)
+  renderMeme()
+}
+
 function onSetLineTxt(txt) {
   setLineTxt(txt)
   renderMeme()
 }
 
-function onSetLineColor(color) {
-  setLineColor(color)
+function onChangeLinePos(val) {
+  changeLinePos(val)
+  renderMeme()
+}
+
+function onSetFillColor(color) {
+  setFillColor(color)
+  renderMeme()
+}
+
+function onSetStrokeColor(color) {
+  setStrokeColor(color)
   renderMeme()
 }
 
@@ -112,4 +145,17 @@ function onChangeFontSize(val) {
 
 function onSwitchLine() {
   switchLine()
+  renderMeme()
+  document.querySelector('.editor-tools input[type=text]').value =
+    getMeme().lines[getMeme().selectedLineIdx].txt
+}
+
+function onChangeTextAlign(side) {
+  changeTextAlign(side)
+  renderMeme()
+}
+
+function onDeleteLine() {
+  deleteLine()
+  renderMeme()
 }
