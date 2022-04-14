@@ -3,10 +3,16 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--clr1);
+  border-block-end: var(--clr2) 1px solid;
+  margin-block-end: 30px;
 }
 
 .main-header .logo {
-  flex-grow: 5;
+  flex-grow: 10;
+}
+
+.main-header .logo img {
+  height: 2rem;
 }
 
 .main-header .main-nav {
@@ -18,4 +24,13 @@
   display: flex;
   list-style: none;
   justify-content: space-between;
+}
+
+.main-header .main-nav ul li a {
+  text-decoration: none;
+  color: var(--clr2);
+}
+
+.main-header .main-nav ul li a:hover {
+  color: var(--brandclr);
 }

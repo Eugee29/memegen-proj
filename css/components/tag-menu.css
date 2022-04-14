@@ -7,20 +7,36 @@
 
 .tag-menu input {
   flex-grow: 2;
+  padding: 0.6875em;
+  border-radius: 6em;
+  border: 1px solid var(--clr2);
 }
 
 .tag-menu ul {
+  margin: 0;
   flex-grow: 1;
   display: grid;
   list-style: none;
-  /* grid-template-columns: 1fr 300px; */
-  grid-template-columns: repeat(auto-fit, 75px);
-  grid-template-rows: 3;
-  /* overflow-x: scroll; */
-
-  /* display: flex;
-  list-style: none;
-  padding: 0;
   justify-content: space-between;
-  flex-grow: 2; */
+  height: 100%;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.tag-menu ul li button {
+  background: none;
+  border: none;
+  color: var(--clr2);
+  font-size: 1.2rem;
+  text-align: left;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.tag-menu ul li:last-child button {
+  color: var(--clr3);
+}
+
+.tag-menu ul li button:hover {
+  color: var(--brandclr);
 }

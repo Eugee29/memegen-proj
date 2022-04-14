@@ -2,9 +2,15 @@
   display: grid;
   height: 100%;
   grid-template-columns: repeat(auto-fill, 150px);
-  gap: 1em;
+  grid-gap: 1em;
 }
 
 .meme-gallery > * {
-  height: 150px;
+  width: 150px;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+.meme-gallery > *:hover {
+  outline: 3px var(--brandclr) solid;
 }
