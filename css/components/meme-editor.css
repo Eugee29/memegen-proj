@@ -91,6 +91,18 @@
   gap: 1em;
 }
 
+.meme-editor .editor-tools .text-editor > * {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--clr2);
+  cursor: pointer;
+}
+
+.meme-editor .editor-tools .text-editor > *:hover {
+  color: var(--brandclr);
+}
+
 .meme-editor .editor-tools .text-editor .item-1 {
   grid-area: item-1;
 }
