@@ -91,12 +91,12 @@ function deleteLine() {
   if (gMeme.lines.length) gMeme.selectedLineIdx--
 }
 
-function createLine(pos) {
+function createLine(pos, fontSize) {
   gMeme.lines.forEach((line) => (line.isSelected = false))
   const line = {
     txt: 'Your Text',
     font: 'impact',
-    size: 50,
+    size: fontSize,
     align: 'center',
     color: 'white',
     stroke: 'black',

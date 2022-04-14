@@ -8,7 +8,7 @@ function renderEditor(ev) {
     <button class="back-btn">Back to Gallery</button>
         <div class="meme-editor">
           <section class="canvas-container">
-            <canvas id="canvas" width="600" height="600"></canvas>
+            <canvas id="canvas" width=500 height=500 ></canvas>
           </section>
           <section class="editor-tools">
             <input type="text" placeholder="Your Text" oninput="onSetLineTxt(this.value)" />
@@ -32,7 +32,7 @@ function renderEditor(ev) {
               <input class="item-8" type="color" oninput="onSetFillColor(this.value)" />
             </div>
             <div class="sticker-selector">
-              <button>😀</button><button>😀</button><button>😀</button>
+              <button>STICKER GOES HERE</button><button>STICKER GOES HERE</button><button>STICKER GOES HERE</button>
             </div>
             <div class="share-download-btns">
               <button>Share</button><button>Download</button>
@@ -46,9 +46,19 @@ function renderEditor(ev) {
     .querySelector('.main-content .back-btn')
     .addEventListener('click', renderGallery)
 
+  window.addEventListener('resize', resizeCanvas)
+
   createMeme()
   setMemeId(ev.target.dataset.id)
+  resizeCanvas()
   onCreateLine()
+}
+
+function resizeCanvas() {
+  const elContainer = document.querySelector('.canvas-container')
+  gElCanvas.width = elContainer.offsetWidth * 0.7
+  gElCanvas.height = gElCanvas.width
+  renderMeme()
 }
 
 function renderMeme() {
@@ -99,13 +109,19 @@ function drawRect(startX, startY, endX, endY) {
 function onCreateLine() {
   switch (getMeme().linesCreated) {
     case 0:
-      createLine({ x: gElCanvas.width / 2, y: 50 })
+      createLine({ x: gElCanvas.width / 2, y: 50 }, gElCanvas.width / 10)
       break
     case 1:
-      createLine({ x: gElCanvas.width / 2, y: gElCanvas.height - 50 })
+      createLine(
+        { x: gElCanvas.width / 2, y: gElCanvas.height - 50 },
+        gElCanvas.width / 10
+      )
       break
     default:
-      createLine({ x: gElCanvas.width / 2, y: gElCanvas.height / 2 })
+      createLine(
+        { x: gElCanvas.width / 2, y: gElCanvas.height / 2 },
+        gElCanvas.width / 10
+      )
   }
   document.querySelector('.editor-tools input[type=text]').value = ''
   renderMeme()

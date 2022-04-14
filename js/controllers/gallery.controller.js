@@ -3,6 +3,7 @@
 let gAllTags = false
 
 function renderGallery() {
+  window.removeEventListener('resize', resizeCanvas)
   let keyWords = getKeyWords()
   let strHTML = `
   <section class="tag-menu">
