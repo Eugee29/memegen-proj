@@ -2,4 +2,5 @@
 
 function onInit() {
   renderGallery()
+  // renderTags()
 }

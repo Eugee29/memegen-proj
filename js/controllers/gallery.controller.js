@@ -1,19 +1,31 @@
 'use strict'
 
+let gAllTags = false
+
 function renderGallery() {
-  const keyWords = Object.keys(getKeyWordMap())
+  let keyWords = getKeyWords()
   let strHTML = `
-    <section class="tag-menu">
-    <input type="text" placeholder="Search" />
+  <section class="tag-menu">
+  <input list="tag-search" placeholder="Search tags" onchange="onFilterBy(this.value)">
+  <datalist id="tag-search">
+    ${keyWords.map((keyWord) => `<option value="${keyWord}">`).join('')}
+  </datalist>  
     <ul>
-      <li><button>${keyWords[0]}</button></li>
-      <li><button>${keyWords[1]}</button></li>
-      <li><button>${keyWords[2]}</button></li>
-      <li><button>${keyWords[3]}</button></li>
-      <li><button onclick ="renderTags()">...more</button></li>
-      
-    </ul>
-    
+    <li><button onclick="onFilterBy('')">All</button></li>`
+
+  if (!gAllTags) keyWords = keyWords.slice(0, 3)
+
+  strHTML += keyWords
+    .map(
+      (keyWord) =>
+        `<li><button onclick="onFilterBy('${keyWord}')">${keyWord}</button></li>`
+    )
+    .join('')
+  strHTML += `
+    <li><button class="toggle-tags-btn" onclick ="onToggleTags()">${
+      gAllTags ? '...less' : '...more'
+    }</button></li>
+  </ul>
   </section>
   <div class="meme-gallery">`
   const imgs = getImgs()
@@ -33,12 +45,11 @@ function renderGallery() {
     )
 }
 
-function renderTags() {
-  const keyWords = Object.keys(getKeyWordMap())
-  let strHTML = keyWords
-    .map((keyWord) => `<li><button>${keyWord}</button></li>`)
-    .join('')
+function onToggleTags() {
+  gAllTags = !gAllTags
+  renderGallery()
+}
 
-  strHTML += `<li><button onclick ="renderGallery()">...less</button></li>`
-  document.querySelector('.tag-menu ul').innerHTML = strHTML
+function onFilterBy(filter) {
+  filterBy(filter)
 }

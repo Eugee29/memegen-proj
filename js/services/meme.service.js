@@ -28,13 +28,20 @@ const gImgs = [
 const gKeywordSearchCountMap = _createKeywordSearchMap()
 
 let gMeme
+let gFilter
 
 function getImgs() {
-  return gImgs
+  if (!gFilter) return gImgs
+  return gImgs.filter((img) => img.keywords.includes(gFilter))
 }
 
-function getKeyWordMap() {
-  return gKeywordSearchCountMap
+function filterBy(filter) {
+  gFilter = filter
+  renderGallery()
+}
+
+function getKeyWords() {
+  return Object.keys(gKeywordSearchCountMap)
 }
 
 function getMeme() {
