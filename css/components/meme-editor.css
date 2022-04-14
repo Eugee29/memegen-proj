@@ -1,7 +1,6 @@
 .meme-editor {
   display: flex;
   flex-grow: 1;
-  /* max-height: 70vh; */
   justify-content: space-between;
   flex-direction: column;
 }
@@ -24,15 +23,26 @@
 }
 
 .meme-editor .editor-tools {
+  margin-block-start: -30px;
   flex-grow: 1;
   align-self: stretch;
-  background-color: var(--clr2);
-
+  background-color: var(--clr1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 1em;
   gap: 2em;
+}
+
+.meme-editor .editor-tools input {
+  border: none;
+  border-bottom: var(--clr2) 2px solid;
+  font-size: 2em;
+  padding: 0.5em;
+}
+
+.meme-editor .editor-tools input:focus-visible {
+  outline: none;
 }
 
 .meme-editor .editor-tools > *:not(:first-child) {
@@ -43,6 +53,33 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  align-items: stretch;
+}
+
+.meme-editor .editor-tools > * {
+  border-block-end: 1px var(--clr2) solid;
+}
+
+/* .meme-editor .editor-tools button {
+  flex-grow: 1;
+  font-size: 1.5rem;
+  color: var(--clr2);
+  background-color: none;
+  border: none;
+  background: none;
+} */
+
+.meme-editor .editor-tools .text-tools > * {
+  flex-grow: 1;
+  font-size: 2rem;
+  color: var(--clr2);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.meme-editor .editor-tools .text-tools > *:hover {
+  color: var(--brandclr);
 }
 
 .meme-editor .editor-tools .text-editor {
