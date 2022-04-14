@@ -6,13 +6,21 @@
 }
 
 .tag-menu input {
-  flex-grow: 1;
+  flex-grow: 2;
 }
 
 .tag-menu ul {
-  display: flex;
+  flex-grow: 1;
+  display: grid;
+  list-style: none;
+  /* grid-template-columns: 1fr 300px; */
+  grid-template-columns: repeat(auto-fit, 100px);
+  grid-template-rows: 3;
+  /* overflow-x: scroll; */
+
+  /* display: flex;
   list-style: none;
   padding: 0;
   justify-content: space-between;
-  flex-grow: 2;
+  flex-grow: 2; */
 }

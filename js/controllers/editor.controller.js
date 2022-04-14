@@ -80,8 +80,6 @@ function markLine() {
   const line = gMeme.lines[gMeme.selectedLineIdx]
   if (!line) return
   const textWidth = gCtx.measureText(line.txt).width
-  console.log(line.txt)
-  console.log(textWidth)
   drawRect(
     line.pos.x - textWidth / 2 - 10,
     line.pos.y - line.size / 2 - 10,
