@@ -27,7 +27,7 @@ function renderEditor(ev) {
               <button class="item-5" onclick ="onChangeTextAlign('left')"></button>
               <select class="item-6" name="font" onchange="onChangeFont(this)">
                 <option value="impact">IMPACT</option>
-                <option value="arial">arial</option>
+                <option value="arial">Arial</option>
                 <option value="courier new">Courier New</option>
                 <option value="Times New Roman">Times New Roman</option>
                 </select>
@@ -40,7 +40,7 @@ function renderEditor(ev) {
             <button>STICKER GOES HERE</button>
             </div>-->
             <div class="share-download-btns">
-              <button class="save-btn" onclick="saveMeme()">Save</button>
+              <button class="save-btn" onclick="onSaveMeme()">Save</button>
               <a href='#' class="share-btn" onclick="uploadImg()">Share</a>
               <a href="#" onclick="downloadCanvas(this)" download="MyMeme.jpg" class="download-btn">Download</a>
             </div>
@@ -192,4 +192,13 @@ function downloadCanvas(elLink) {
   const data = gElCanvas.toDataURL()
   elLink.href = data
   elLink.download = 'MyMeme.jpg'
+}
+
+function onSaveMeme() {
+  saveMeme(gElCanvas)
+  const elSaveBtn = document.querySelector('.save-btn')
+  elSaveBtn.innerText = 'Saved!'
+  setTimeout(() => {
+    elSaveBtn.innerText = 'Save'
+  }, 1000)
 }

@@ -3,9 +3,8 @@
 const DBKey = 'userMemes'
 const gUserMemes = loadFromStorage(DBKey) || []
 
-function saveMeme() {
-  console.log(gElCanvas)
-  const data = gElCanvas.toDataURL()
+function saveMeme(canvas) {
+  const data = canvas.toDataURL()
   gUserMemes.push(data)
   saveToStorage(DBKey, gUserMemes)
 }
