@@ -189,8 +189,8 @@ function deselectAll() {
 }
 
 function downloadCanvas(elLink) {
-  deselectAll()
   const data = gElCanvas.toDataURL()
+  console.log(data.length)
   elLink.href = data
   elLink.download = 'MyMeme.jpg'
 }
