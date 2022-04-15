@@ -12,14 +12,12 @@
 }
 
 .meme-editor .canvas-container {
-  flex-grow: 1;
+  flex-grow: 5;
+
   display: flex;
   justify-content: center;
-  padding: 2em;
-}
 
-.meme-editor .canvas-container #canvas {
-  object-fit: contain;
+  margin: 2em;
 }
 
 .meme-editor .editor-tools {
@@ -60,15 +58,6 @@
   border-block-end: 1px var(--clr2) solid;
 }
 
-/* .meme-editor .editor-tools button {
-  flex-grow: 1;
-  font-size: 1.5rem;
-  color: var(--clr2);
-  background-color: none;
-  border: none;
-  background: none;
-} */
-
 .meme-editor .editor-tools .text-tools > * {
   flex-grow: 1;
   font-size: 2rem;
@@ -76,6 +65,11 @@
   border: none;
   background: none;
   cursor: pointer;
+}
+
+.meme-editor .editor-tools .text-tools .delete-btn::before {
+  font-family: fa;
+  content: '\f2ed';
 }
 
 .meme-editor .editor-tools .text-tools > *:hover {
@@ -99,6 +93,12 @@
   cursor: pointer;
 }
 
+.meme-editor .editor-tools .text-editor select {
+  text-align: center;
+  border: 1px var(--clr2) solid;
+  border-radius: 6em;
+}
+
 .meme-editor .editor-tools .text-editor > *:hover {
   color: var(--brandclr);
 }
@@ -114,12 +114,27 @@
   grid-area: item-3;
 }
 
+.meme-editor .editor-tools .text-editor .item-3::before {
+  font-family: fa;
+  content: '\f036';
+}
+
 .meme-editor .editor-tools .text-editor .item-4 {
   grid-area: item-4;
 }
 
+.meme-editor .editor-tools .text-editor .item-4::before {
+  font-family: fa;
+  content: '\f037';
+}
+
 .meme-editor .editor-tools .text-editor .item-5 {
   grid-area: item-5;
+}
+
+.meme-editor .editor-tools .text-editor .item-5::before {
+  font-family: fa;
+  content: '\f038';
 }
 
 .meme-editor .editor-tools .text-editor .item-6 {
@@ -130,8 +145,18 @@
   grid-area: item-7;
 }
 
+.meme-editor .editor-tools .text-editor .item-7::before {
+  font-family: fa;
+  content: '\53';
+}
+
 .meme-editor .editor-tools .text-editor .item-8 {
   grid-area: item-8;
+}
+
+.meme-editor .editor-tools .text-editor .item-8::before {
+  font-family: fa;
+  content: '\f576';
 }
 
 .meme-editor .editor-tools .sticker-selector {
@@ -144,4 +169,20 @@
 .meme-editor .editor-tools .share-download-btns {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+}
+
+.meme-editor .editor-tools .share-download-btns > * {
+  flex-grow: 1;
+  font-size: 2em;
+  background: none;
+  border: none;
+  color: var(--clr2);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.meme-editor .editor-tools .share-download-btns > *:hover {
+  color: var(--brandclr);
 }

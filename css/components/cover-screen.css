@@ -1,0 +1,15 @@
+.cover-screen {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  background-color: black;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.menu-open .cover-screen {
+  opacity: 50%;
+  pointer-events: all;
+}

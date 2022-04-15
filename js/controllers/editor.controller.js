@@ -8,7 +8,7 @@ function renderEditor(ev) {
     <button class="back-btn">Back to Gallery</button>
         <div class="meme-editor">
           <section class="canvas-container">
-            <canvas id="canvas" width=500 height=500 ></canvas>
+            <canvas id="canvas" width=600 height=600 onclick="deselectAll()"></canvas>
           </section>
           <section class="editor-tools">
             <input type="text" placeholder="Your Text" oninput="onSetLineTxt(this.value)" />
@@ -17,25 +17,32 @@ function renderEditor(ev) {
               <button onclick="onChangeLinePos(-5)">🠕</button>
               <button onclick="onSwitchLine()">⇃↾</button>
               <button onclick ="onCreateLine()">+</button>
-              <button onclick ="onDeleteLine()">DEL</button>
+              <button onclick ="onDeleteLine()" class="delete-btn"></button>
             </div>
             <div class="text-editor">
               <button class="item-1" onclick="onChangeFontSize(3)">A+</button>
               <button class="item-2" onclick="onChangeFontSize(-3)">A-</button>
-              <button class="item-3" onclick ="onChangeTextAlign('right')">left</button>
-              <button class="item-4" onclick ="onChangeTextAlign('center')">center</button>
-              <button class="item-5" onclick ="onChangeTextAlign('left')">right</button>
+              <button class="item-3" onclick ="onChangeTextAlign('right')"></button>
+              <button class="item-4" onclick ="onChangeTextAlign('center')"></button>
+              <button class="item-5" onclick ="onChangeTextAlign('left')"></button>
               <select class="item-6" name="font" onchange="onChangeFont(this)">
                 <option value="impact">IMPACT</option>
-                <option value="arial">arial</option></select>
+                <option value="arial">arial</option>
+                <option value="courier new">Courier New</option>
+                <option value="Times New Roman">Times New Roman</option>
+                </select>
               <input class="item-7" type="color" oninput="onSetStrokeColor(this.value)" />
               <input class="item-8" type="color" oninput="onSetFillColor(this.value)" />
             </div>
-            <div class="sticker-selector">
-              <button>STICKER GOES HERE</button><button>STICKER GOES HERE</button><button>STICKER GOES HERE</button>
-            </div>
+            <!-- <div class="sticker-selector">
+            <button>STICKER GOES HERE</button>
+            <button>STICKER GOES HERE</button>
+            <button>STICKER GOES HERE</button>
+            </div>-->
             <div class="share-download-btns">
-              <button>Share</button><button>Download</button>
+            <!-- <button class="save-btn">Save</button>
+              <button class="share-btn">Share</button>-->
+              <a href="#" onclick="downloadCanvas(this)" download="MyMeme.jpg" class="download-btn">Download</a>
             </div>
           </section>
         </div>`
@@ -56,9 +63,11 @@ function renderEditor(ev) {
 
 function resizeCanvas() {
   const elContainer = document.querySelector('.canvas-container')
-  gElCanvas.width = elContainer.offsetWidth * 0.7
-  gElCanvas.height = gElCanvas.width
-  renderMeme()
+  if (elContainer.offsetWidth < gElCanvas.width) {
+    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.height = gElCanvas.width
+    renderMeme()
+  }
 }
 
 function renderMeme() {
@@ -101,7 +110,7 @@ function markLine() {
 function drawRect(startX, startY, endX, endY) {
   gCtx.beginPath()
   gCtx.rect(startX, startY, endX, endY)
-  gCtx.strokeStyle = 'black'
+  gCtx.strokeStyle = 'white'
   gCtx.stroke()
   gCtx.closePath()
 }
@@ -172,4 +181,16 @@ function onChangeTextAlign(side) {
 function onDeleteLine() {
   deleteLine()
   renderMeme()
+}
+
+function deselectAll() {
+  getMeme().selectedLineIdx = -1
+  renderMeme()
+}
+
+function downloadCanvas(elLink) {
+  deselectAll()
+  const data = gElCanvas.toDataURL()
+  elLink.href = data
+  elLink.download = 'MyMeme.jpg'
 }

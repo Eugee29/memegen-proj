@@ -13,14 +13,21 @@
 }
 
 .tag-menu ul {
+  display: none;
   margin: 0;
   flex-grow: 1;
-  display: grid;
+
   list-style: none;
   justify-content: space-between;
   height: 100%;
   flex-wrap: wrap;
   grid-template-columns: repeat(5, 1fr);
+}
+
+@media (min-width: 600px) {
+  .tag-menu ul {
+    display: grid;
+  }
 }
 
 .tag-menu ul li button {
