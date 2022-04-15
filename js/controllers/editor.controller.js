@@ -40,8 +40,8 @@ function renderEditor(ev) {
             <button>STICKER GOES HERE</button>
             </div>-->
             <div class="share-download-btns">
-            <!-- <button class="save-btn">Save</button>
-              <button class="share-btn">Share</button>-->
+              <button class="save-btn" onclick="saveMeme()">Save</button>
+              <a href='#' class="share-btn" onclick="uploadImg()">Share</a>
               <a href="#" onclick="downloadCanvas(this)" download="MyMeme.jpg" class="download-btn">Download</a>
             </div>
           </section>
@@ -190,7 +190,6 @@ function deselectAll() {
 
 function downloadCanvas(elLink) {
   const data = gElCanvas.toDataURL()
-  console.log(data.length)
   elLink.href = data
   elLink.download = 'MyMeme.jpg'
 }

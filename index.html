@@ -17,9 +17,8 @@
         </div>
         <nav class="main-nav">
           <ul>
-            <li><a href="">Memes</a></li>
+            <li><a onclick="renderUserMemes()">My Memes</a></li>
             <li><a onclick="renderGallery()">Gallery</a></li>
-            <li><a href="">About</a></li>
           </ul>
         </nav>
         <button class="hamburger" onclick="toggleMenu()"></button>
@@ -31,10 +30,13 @@
       <!-- FOOTER -->
       <footer class="footer main-layout">© Uri Gruda</footer>
     </div>
+
+    <script src="js/services/storage.service.js"></script>
+    <script src="js/services/user.service.js"></script>
+    <script src="js/services/upload.service.js"></script>
     <script src="js/services/meme.service.js"></script>
     <script src="js/controllers/gallery.controller.js"></script>
     <script src="js/controllers/editor.controller.js"></script>
-
     <script src="js/main.js"></script>
   </body>
 </html>
