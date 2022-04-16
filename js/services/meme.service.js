@@ -53,6 +53,7 @@ function setMemeId(imgId) {
 }
 
 function setLineTxt(txt) {
+  if (!gMeme.lines.length) return
   gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
 
@@ -101,6 +102,7 @@ function createLine(pos, fontSize) {
     color: 'white',
     stroke: 'black',
     pos,
+    isDrag: false,
   }
   gMeme.lines.push(line)
   gMeme.linesCreated++
@@ -128,4 +130,33 @@ function _createKeywordSearchMap() {
     })
   )
   return keywordsMap
+}
+
+function isLineClicked(clickedPos) {
+  let isClicked = false
+  gMeme.lines.forEach((line, index) => {
+    let { pos } = line
+    let textWidth = gCtx.measureText(line.txt).width
+
+    if (
+      clickedPos.x >= pos.x - textWidth &&
+      clickedPos.x <= pos.x + textWidth / 2 &&
+      clickedPos.y >= pos.y - line.size &&
+      clickedPos.y <= pos.y + line.size / 2
+    ) {
+      gMeme.selectedLineIdx = index
+      isClicked = true
+    }
+  })
+  return isClicked
+}
+
+function setLineDrag(drag) {
+  if (gMeme.selectedLineIdx === -1) return
+  gMeme.lines[gMeme.selectedLineIdx].isDrag = drag
+}
+
+function moveLine(dx, dy) {
+  gMeme.lines[gMeme.selectedLineIdx].pos.x += dx
+  gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
 }

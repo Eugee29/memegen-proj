@@ -13,10 +13,8 @@
 
 .meme-editor .canvas-container {
   flex-grow: 5;
-
   display: flex;
   justify-content: center;
-
   margin: 2em;
 }
 

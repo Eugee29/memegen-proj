@@ -3,12 +3,15 @@
 let gElCanvas
 let gCtx
 
+let gStartPos
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
+
 function renderEditor(ev) {
   document.querySelector('.main-content').innerHTML = `
     <button class="back-btn">Back to Gallery</button>
         <div class="meme-editor">
           <section class="canvas-container">
-            <canvas id="canvas" width=600 height=600 onclick="deselectAll()"></canvas>
+            <canvas id="canvas" width=600 height=600></canvas>
           </section>
           <section class="editor-tools">
             <input type="text" placeholder="Your Text" oninput="onSetLineTxt(this.value)" />
@@ -46,19 +49,37 @@ function renderEditor(ev) {
             </div>
           </section>
         </div>`
+
   gElCanvas = document.querySelector('#canvas')
   gCtx = gElCanvas.getContext('2d')
 
+  addListeners()
+  createMeme()
+  setMemeId(ev.target.dataset.id)
+  resizeCanvas()
+  onCreateLine()
+}
+
+function addListeners() {
   document
     .querySelector('.main-content .back-btn')
     .addEventListener('click', renderGallery)
 
   window.addEventListener('resize', resizeCanvas)
+  addMouseListeners()
+  addTouchListeners()
+}
 
-  createMeme()
-  setMemeId(ev.target.dataset.id)
-  resizeCanvas()
-  onCreateLine()
+function addMouseListeners() {
+  gElCanvas.addEventListener('mousedown', onDown)
+  gElCanvas.addEventListener('mousemove', onMove)
+  gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+  gElCanvas.addEventListener('touchstart', onDown)
+  gElCanvas.addEventListener('touchmove', onMove)
+  gElCanvas.addEventListener('touchend', onUp)
 }
 
 function resizeCanvas() {
@@ -201,4 +222,48 @@ function onSaveMeme() {
   setTimeout(() => {
     elSaveBtn.innerText = 'Save'
   }, 1000)
+}
+
+function onDown(ev) {
+  const pos = getEvPos(ev)
+  if (!isLineClicked(pos)) {
+    deselectAll()
+    return
+  }
+  setLineDrag(true)
+  gStartPos = pos
+  gElCanvas.style.cursor = 'grabbing'
+  renderMeme()
+}
+
+function onMove(ev) {
+  const line = getMeme().lines[getMeme().selectedLineIdx]
+  if (!line || !line.isDrag) return
+  const pos = getEvPos(ev)
+  const dx = pos.x - gStartPos.x
+  const dy = pos.y - gStartPos.y
+  moveLine(dx, dy)
+  gStartPos = pos
+  renderMeme()
+}
+
+function onUp() {
+  setLineDrag(false)
+  gElCanvas.style.cursor = 'grab'
+}
+
+function getEvPos(ev) {
+  var pos = {
+    x: (ev.offsetX * 3) / 4,
+    y: (ev.offsetY * 3) / 4,
+  }
+  if (gTouchEvs.includes(ev.type)) {
+    ev.preventDefault()
+    ev = ev.changedTouches[0]
+    pos = {
+      x: ev.pageX - ev.target.offsetLeft,
+      y: ev.pageY - ev.target.offsetTop,
+    }
+  }
+  return pos
 }
