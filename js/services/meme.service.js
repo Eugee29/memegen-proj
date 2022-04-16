@@ -26,10 +26,10 @@ const gImgs = [
 ]
 
 const gStickers = [
-  { id: 1, url: '../images/stickers/1.png' },
-  { id: 2, url: '../images/stickers/2.png' },
-  { id: 3, url: '../images/stickers/3.png' },
-  { id: 4, url: '../images/stickers/4.png' },
+  { id: 1, url: '/images/stickers/1.png' },
+  { id: 2, url: '/images/stickers/2.png' },
+  { id: 3, url: '/images/stickers/3.png' },
+  { id: 4, url: '/images/stickers/4.png' },
 ]
 
 const gKeywordSearchCountMap = _createKeywordSearchMap()

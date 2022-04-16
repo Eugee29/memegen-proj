@@ -172,10 +172,13 @@
 }
 
 .meme-editor .editor-tools .sticker-selector > * {
-  /* font-size: 50px;
-  background: none;
-  border: none; */
+  cursor: pointer;
   width: 100px;
+  border-radius: 50%;
+}
+
+.meme-editor .editor-tools .sticker-selector > *:hover {
+  background-color: var(--brandclr);
 }
 
 .meme-editor .editor-tools .share-download-btns {
