@@ -25,10 +25,21 @@ const gImgs = [
   { id: 18, url: 'images/square/18.jpg', keywords: ['movies', 'television'] },
 ]
 
+const gStickers = [
+  { id: 1, url: '../images/stickers/1.png' },
+  { id: 2, url: '../images/stickers/2.png' },
+  { id: 3, url: '../images/stickers/3.png' },
+  { id: 4, url: '../images/stickers/4.png' },
+]
+
 const gKeywordSearchCountMap = _createKeywordSearchMap()
 
 let gMeme
 let gFilter
+
+function getStickers() {
+  return gStickers
+}
 
 function getImgs() {
   if (!gFilter) return gImgs
@@ -86,11 +97,6 @@ function switchLine() {
   if (gMeme.selectedLineIdx >= gMeme.lines.length) gMeme.selectedLineIdx = 0
 }
 
-// function setLinePos(x, y) {
-//   gMeme.lines[gMeme.selectedLineIdx].pos[x] = x
-//   gMeme.lines[gMeme.selectedLineIdx].pos[y] = y
-// }
-
 function deleteLine() {
   gMeme.lines.splice(gMeme.selectedLineIdx, 1)
   if (gMeme.lines.length) gMeme.selectedLineIdx--
@@ -127,30 +133,31 @@ function createMeme() {
   }
 }
 
-function _createKeywordSearchMap() {
-  const keywordsMap = {}
-  gImgs.forEach((img) =>
-    img.keywords.forEach((keyword) => {
-      keywordsMap[keyword] = keywordsMap[keyword] ? keywordsMap[keyword] + 1 : 1
-    })
-  )
-  return keywordsMap
-}
-
 function isLineClicked(clickedPos) {
   let isClicked = false
   gMeme.lines.forEach((line, index) => {
     let { pos } = line
-    let textWidth = gCtx.measureText(line.txt).width
-
-    if (
-      clickedPos.x >= pos.x - textWidth &&
-      clickedPos.x <= pos.x + textWidth / 2 &&
-      clickedPos.y >= pos.y - line.size &&
-      clickedPos.y <= pos.y + line.size / 2
-    ) {
-      gMeme.selectedLineIdx = index
-      isClicked = true
+    if (line.isSticker) {
+      if (
+        clickedPos.x >= pos.x &&
+        clickedPos.x <= pos.x + line.size &&
+        clickedPos.y >= pos.y &&
+        clickedPos.y <= pos.y + line.size
+      ) {
+        gMeme.selectedLineIdx = index
+        isClicked = true
+      }
+    } else {
+      let textWidth = gCtx.measureText(line.txt).width
+      if (
+        clickedPos.x >= pos.x - textWidth / 2 &&
+        clickedPos.x <= pos.x + textWidth / 2 &&
+        clickedPos.y >= pos.y - line.size / 2 &&
+        clickedPos.y <= pos.y + line.size / 2
+      ) {
+        gMeme.selectedLineIdx = index
+        isClicked = true
+      }
     }
   })
   return isClicked
@@ -164,4 +171,14 @@ function setLineDrag(drag) {
 function moveLine(dx, dy) {
   gMeme.lines[gMeme.selectedLineIdx].pos.x += dx
   gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
+}
+
+function _createKeywordSearchMap() {
+  const keywordsMap = {}
+  gImgs.forEach((img) =>
+    img.keywords.forEach((keyword) => {
+      keywordsMap[keyword] = keywordsMap[keyword] ? keywordsMap[keyword] + 1 : 1
+    })
+  )
+  return keywordsMap
 }

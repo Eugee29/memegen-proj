@@ -6,7 +6,19 @@ let gCtx
 let gStartPos
 const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 
-function renderEditor(ev) {
+function initEditor(ev) {
+  renderEditor()
+  renderStickerSelector()
+  gElCanvas = document.querySelector('#canvas')
+  gCtx = gElCanvas.getContext('2d')
+  addListeners()
+  createMeme()
+  setMemeId(ev.target.dataset.id)
+  resizeCanvas()
+  onCreateLine()
+}
+
+function renderEditor() {
   document.querySelector('.main-content').innerHTML = `
     <button class="back-btn">Back to Gallery</button>
         <div class="meme-editor">
@@ -37,27 +49,59 @@ function renderEditor(ev) {
               <input class="item-7" type="color" oninput="onSetStrokeColor(this.value)" />
               <input class="item-8" type="color" oninput="onSetFillColor(this.value)" />
             </div>
-            <!-- <div class="sticker-selector">
-            <button>STICKER GOES HERE</button>
-            <button>STICKER GOES HERE</button>
-            <button>STICKER GOES HERE</button>
-            </div>-->
+            <div class="sticker-selector">
+            </div>
             <div class="share-download-btns">
+            
               <button class="save-btn" onclick="onSaveMeme()">Save</button>
               <a href='#' class="share-btn" onclick="uploadImg()">Share</a>
               <a href="#" onclick="downloadCanvas(this)" download="MyMeme.jpg" class="download-btn">Download</a>
             </div>
           </section>
         </div>`
+}
 
-  gElCanvas = document.querySelector('#canvas')
-  gCtx = gElCanvas.getContext('2d')
+function renderStickerSelector() {
+  const stickers = getStickers()
+  document.querySelector('.sticker-selector').innerHTML = stickers
+    .map(
+      (sticker) =>
+        `<img src="${sticker.url}" alt="${sticker.id}.png" onclick="addSticker('${sticker.url}')">`
+    )
+    .join('')
+}
 
-  addListeners()
-  createMeme()
-  setMemeId(ev.target.dataset.id)
-  resizeCanvas()
-  onCreateLine()
+function addSticker(src) {
+  // onCreateLine()
+  // setLineTxt(sticker)
+  gMeme.lines.push({
+    isSticker: true,
+    src: src,
+    size: 100,
+    pos: { x: gElCanvas.width / 2, y: gElCanvas.height / 2 },
+    isDrag: false,
+  })
+  // const sticker = new Image()
+  // sticker.src = src
+  // sticker.onload = () => {
+  //   gCtx.drawImage(
+  //     sticker,
+  //     gElCanvas.width / 2 - 50,
+  //     gElCanvas.height / 2 - 50,
+  //     gElCanvas.width / 2,
+  //     gElCanvas.height / 2
+  //   )
+  // }
+  renderMeme()
+}
+
+function renderSticker(line) {
+  const { x, y } = line.pos
+  const sticker = new Image()
+  sticker.src = line.src
+  sticker.onload = () => {
+    gCtx.drawImage(sticker, x, y, line.size, line.size)
+  }
 }
 
 function addListeners() {
@@ -84,11 +128,13 @@ function addTouchListeners() {
 
 function resizeCanvas() {
   const elContainer = document.querySelector('.canvas-container')
+  gElCanvas.width = elContainer.offsetHeight
+  gElCanvas.height = gElCanvas.width
   if (elContainer.offsetWidth < gElCanvas.width) {
     gElCanvas.width = elContainer.offsetWidth
     gElCanvas.height = gElCanvas.width
-    renderMeme()
   }
+  renderMeme()
 }
 
 function renderMeme() {
@@ -98,7 +144,10 @@ function renderMeme() {
   memeImg.src = img.url
   memeImg.onload = () => {
     gCtx.drawImage(memeImg, 0, 0, gElCanvas.width, gElCanvas.height)
-    currMeme.lines.forEach((line) => renderText(line))
+    currMeme.lines.forEach((line) => {
+      if (line.isSticker) renderSticker(line)
+      else renderText(line)
+    })
     markLine()
   }
 }
@@ -120,12 +169,16 @@ function markLine() {
   const line = gMeme.lines[gMeme.selectedLineIdx]
   if (!line) return
   const textWidth = gCtx.measureText(line.txt).width
-  drawRect(
-    line.pos.x - textWidth / 2 - 10,
-    line.pos.y - line.size / 2 - 10,
-    textWidth + 20,
-    line.size + 20
-  )
+
+  if (line.isSticker) {
+    drawRect(line.pos.x, line.pos.y, line.size, line.size)
+  } else
+    drawRect(
+      line.pos.x - textWidth / 2 - 10,
+      line.pos.y - line.size / 2 - 10,
+      textWidth + 20,
+      line.size + 20
+    )
 }
 
 function drawRect(startX, startY, endX, endY) {
@@ -255,8 +308,8 @@ function onUp() {
 
 function getEvPos(ev) {
   var pos = {
-    x: (ev.offsetX * 3) / 4,
-    y: (ev.offsetY * 3) / 4,
+    x: ev.offsetX,
+    y: ev.offsetY,
   }
   if (gTouchEvs.includes(ev.type)) {
     ev.preventDefault()

@@ -42,7 +42,7 @@ function renderGallery() {
   document
     .querySelectorAll('.meme-gallery .meme')
     .forEach((elMeme) =>
-      elMeme.addEventListener('click', renderEditor.bind(this))
+      elMeme.addEventListener('click', initEditor.bind(this))
     )
 }
 
