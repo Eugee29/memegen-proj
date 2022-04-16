@@ -41,6 +41,16 @@ function getStickers() {
   return gStickers
 }
 
+function addSticker(src) {
+  gMeme.lines.push({
+    isSticker: true,
+    src: src,
+    size: gElCanvas.width / 4,
+    pos: { x: gElCanvas.width / 2, y: gElCanvas.height / 2 },
+    isDrag: false,
+  })
+}
+
 function getImgs() {
   if (!gFilter) return gImgs
   return gImgs.filter((img) => img.keywords.includes(gFilter))

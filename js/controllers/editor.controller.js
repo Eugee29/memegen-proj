@@ -72,14 +72,7 @@ function renderStickerSelector() {
 }
 
 function onAddSticker(src) {
-  gMeme.lines.push({
-    isSticker: true,
-    src: src,
-    size: gElCanvas.width / 4,
-    pos: { x: gElCanvas.width / 2, y: gElCanvas.height / 2 },
-    isDrag: false,
-  })
-
+  addSticker(src)
   renderMeme()
 }
 
