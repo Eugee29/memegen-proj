@@ -188,6 +188,7 @@ function onChangeFontSize(val) {
 }
 
 function onSwitchLine() {
+  if (!getMeme().lines.length) return
   switchLine()
   renderMeme()
   document.querySelector('.editor-tools input[type=text]').value =

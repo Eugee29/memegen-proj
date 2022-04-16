@@ -58,22 +58,27 @@ function setLineTxt(txt) {
 }
 
 function setFillColor(color) {
+  if (!gMeme.lines.length) return
   gMeme.lines[gMeme.selectedLineIdx].color = color
 }
 
 function setStrokeColor(color) {
+  if (!gMeme.lines.length) return
   gMeme.lines[gMeme.selectedLineIdx].stroke = color
 }
 
 function changeFontSize(val) {
+  if (!gMeme.lines.length) return
   gMeme.lines[gMeme.selectedLineIdx].size += val
 }
 
 function changeLinePos(val) {
+  if (!gMeme.lines.length) return
   gMeme.lines[gMeme.selectedLineIdx].pos.y += val
 }
 
 function changeFont(font) {
+  if (!gMeme.lines.length) return
   gMeme.lines[gMeme.selectedLineIdx].font = font
 }
 
@@ -82,10 +87,10 @@ function switchLine() {
   if (gMeme.selectedLineIdx >= gMeme.lines.length) gMeme.selectedLineIdx = 0
 }
 
-function setLinePos(x, y) {
-  gMeme.lines[gMeme.selectedLineIdx].pos[x] = x
-  gMeme.lines[gMeme.selectedLineIdx].pos[y] = y
-}
+// function setLinePos(x, y) {
+//   gMeme.lines[gMeme.selectedLineIdx].pos[x] = x
+//   gMeme.lines[gMeme.selectedLineIdx].pos[y] = y
+// }
 
 function deleteLine() {
   gMeme.lines.splice(gMeme.selectedLineIdx, 1)
@@ -110,6 +115,7 @@ function createLine(pos, fontSize) {
 }
 
 function changeTextAlign(side) {
+  if (!gMeme.lines.length) return
   gMeme.lines[gMeme.selectedLineIdx].align = side
 }
 
