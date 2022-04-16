@@ -13,7 +13,9 @@ function initEditor(ev) {
   gCtx = gElCanvas.getContext('2d')
   addListeners()
   createMeme()
-  setMemeId(ev.target.dataset.id)
+  if (ev.target) setMemeId(ev.target.dataset.id)
+  else setMemeId(ev.src)
+
   resizeCanvas()
   onCreateLine()
 }
@@ -122,7 +124,8 @@ function renderMeme() {
   const currMeme = getMeme()
   const img = getImgs().find((img) => img.id === +currMeme.selectedImgId)
   const memeImg = new Image()
-  memeImg.src = img.url
+  if (img) memeImg.src = img.url
+  else memeImg.src = currMeme.selectedImgId
   memeImg.onload = () => {
     gCtx.drawImage(memeImg, 0, 0, gElCanvas.width, gElCanvas.height)
     currMeme.lines.forEach((line) => {

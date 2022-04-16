@@ -9,6 +9,19 @@
   width: 150px;
   border-radius: 1em;
   cursor: pointer;
+  background-color: var(--clr2);
+}
+
+.meme-gallery > .file-input {
+  display: none;
+}
+
+.meme-gallery > label {
+  display: flex;
+  color: var(--clr1);
+  justify-content: center;
+  align-items: center;
+  font-size: 6em;
 }
 
 .meme-gallery > *:hover {

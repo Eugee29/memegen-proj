@@ -7,7 +7,7 @@ function renderGallery() {
   let keyWords = getKeyWords()
   let strHTML = `
   <section class="tag-menu">
-  <input list="tag-search" placeholder="Search tags" onchange="onFilterBy(this.value)">
+  <input list="tag-search" placeholder="Search" onchange="onFilterBy(this.value)">
   <datalist id="tag-search">
     ${keyWords.map((keyWord) => `<option value="${keyWord}">`).join('')}
   </datalist>  
@@ -30,6 +30,7 @@ function renderGallery() {
   </section>
   <div class="meme-gallery">`
   const imgs = getImgs()
+  strHTML += `<input type="file" id="file" class="file-input" name="image" onchange="onImgInput(event)" /><label for="file">+</label>`
   strHTML += imgs
     .map(
       (img) =>
@@ -54,4 +55,19 @@ function onToggleTags() {
 function onFilterBy(filter) {
   filterBy(filter)
   renderGallery()
+}
+
+function onImgInput(ev) {
+  loadImageFromInput(ev, initEditor)
+}
+
+function loadImageFromInput(ev, onImageReady) {
+  let reader = new FileReader()
+
+  reader.onload = (event) => {
+    let img = new Image()
+    img.src = event.target.result
+    img.onload = onImageReady.bind(null, img)
+  }
+  reader.readAsDataURL(ev.target.files[0])
 }

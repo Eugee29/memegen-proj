@@ -43,6 +43,7 @@ function getStickers() {
 
 function addSticker(src) {
   gMeme.lines.push({
+    txt: '',
     isSticker: true,
     src: src,
     size: gElCanvas.width / 4,
