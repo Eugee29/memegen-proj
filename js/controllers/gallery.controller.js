@@ -19,7 +19,7 @@ function renderGallery() {
   strHTML += keyWords
     .map(
       (keyWord) =>
-        `<li><button onclick="onFilterBy('${keyWord}')">${keyWord}</button></li>`
+        `<li><button name="${keyWord}" onclick="onFilterBy('${keyWord}')">${keyWord}</button></li>`
     )
     .join('')
   strHTML += `
@@ -53,4 +53,5 @@ function onToggleTags() {
 
 function onFilterBy(filter) {
   filterBy(filter)
+  renderGallery()
 }

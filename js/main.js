@@ -1,8 +1,8 @@
 'use strict'
 
 function onInit() {
-  renderGallery()
   // renderTags()
+  renderGallery()
 }
 
 function toggleMenu() {

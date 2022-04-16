@@ -5,7 +5,7 @@ const gImgs = [
   { id: 2, url: 'images/square/2.jpg', keywords: ['animals'] },
   { id: 3, url: 'images/square/3.jpg', keywords: ['animals', 'kids'] },
   { id: 4, url: 'images/square/4.jpg', keywords: ['animals'] },
-  { id: 5, url: 'images/square/5.jpg', keywords: ['animals', 'kids'] },
+  { id: 5, url: 'images/square/5.jpg', keywords: ['kids'] },
   { id: 6, url: 'images/square/6.jpg', keywords: ['television'] },
   { id: 7, url: 'images/square/7.jpg', keywords: ['kids'] },
   { id: 8, url: 'images/square/8.jpg', keywords: ['movies', 'television'] },
@@ -37,7 +37,6 @@ function getImgs() {
 
 function filterBy(filter) {
   gFilter = filter
-  renderGallery()
 }
 
 function getKeyWords() {

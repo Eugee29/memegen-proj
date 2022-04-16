@@ -94,10 +94,10 @@ function resizeCanvas() {
 function renderMeme() {
   const currMeme = getMeme()
   const img = getImgs().find((img) => img.id === +currMeme.selectedImgId)
-  const genMeme = new Image()
-  genMeme.src = img.url
-  genMeme.onload = () => {
-    gCtx.drawImage(genMeme, 0, 0, gElCanvas.width, gElCanvas.height)
+  const memeImg = new Image()
+  memeImg.src = img.url
+  memeImg.onload = () => {
+    gCtx.drawImage(memeImg, 0, 0, gElCanvas.width, gElCanvas.height)
     currMeme.lines.forEach((line) => renderText(line))
     markLine()
   }
