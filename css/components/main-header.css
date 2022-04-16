@@ -9,7 +9,6 @@
 }
 
 .main-header .logo {
-  /* flex-grow: 20; */
   cursor: pointer;
 }
 
@@ -18,8 +17,6 @@
 }
 
 .main-header .main-nav {
-  /* flex-grow: 1; */
-  /* display: none; */
   position: absolute;
   right: 0;
   top: 0;
@@ -29,18 +26,15 @@
   height: 100vh;
   width: 65%;
   transform: translateX(100%);
-  /* display: none; */
   transition: 0.4s;
 }
 
 .menu-open .main-header .main-nav {
   transform: translateX(0);
-  /* display: initial; */
 }
 
 @media (min-width: 600px) {
   .main-header .main-nav {
-    /* display: initial; */
     position: static;
     margin-left: 2em;
     margin-right: 2em;
