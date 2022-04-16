@@ -66,32 +66,20 @@ function renderStickerSelector() {
   document.querySelector('.sticker-selector').innerHTML = stickers
     .map(
       (sticker) =>
-        `<img src="${sticker.url}" alt="${sticker.id}.png" onclick="addSticker('${sticker.url}')">`
+        `<img src="${sticker.url}" alt="${sticker.id}.png" onclick="onAddSticker('${sticker.url}')">`
     )
     .join('')
 }
 
-function addSticker(src) {
-  // onCreateLine()
-  // setLineTxt(sticker)
+function onAddSticker(src) {
   gMeme.lines.push({
     isSticker: true,
     src: src,
-    size: 100,
+    size: gElCanvas.width / 4,
     pos: { x: gElCanvas.width / 2, y: gElCanvas.height / 2 },
     isDrag: false,
   })
-  // const sticker = new Image()
-  // sticker.src = src
-  // sticker.onload = () => {
-  //   gCtx.drawImage(
-  //     sticker,
-  //     gElCanvas.width / 2 - 50,
-  //     gElCanvas.height / 2 - 50,
-  //     gElCanvas.width / 2,
-  //     gElCanvas.height / 2
-  //   )
-  // }
+
   renderMeme()
 }
 
