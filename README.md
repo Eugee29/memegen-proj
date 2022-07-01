@@ -4,7 +4,7 @@ A meme generator made in 3 days.
 
 
 
-## Features
+## Made With
 
 - Vanilla JavaScript
 - Canvas
